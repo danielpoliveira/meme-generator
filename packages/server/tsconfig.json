@@ -1,6 +1,23 @@
 {
   "extends": "../../tsconfig.json",
+
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": ["ES6"],
+    "baseUrl": ".",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ],
+    "paths": {
+      "@database/*": ["./database/*"],
+      "@controllers/*": ["./src/controllers/*"],
+      "@models/*": ["./src/models/*"],
+    }
+  },
   "include": [
     "./src/**/*"
-  ]
+  ],
+  
 }

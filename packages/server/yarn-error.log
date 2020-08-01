@@ -1,0 +1,51 @@
+Arguments: 
+  /opt/node/bin/node /opt/node/bin/yarn start
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/daniel/Documents/Applications/sublime_text_3:/opt/lampp/bin:/sbin:/opt/node/bin:/opt/java-jdk-1.8/bin:/home/daniel/Android/Sdk/emulator:/home/daniel/Android/Sdk/tools:/home/daniel/Android/Sdk/tools/bin:/home/daniel/Android/Sdk/platform-tools:/home/daniel/Documents/Applications/sublime_text_3:/opt/lampp/bin:/sbin:/opt/node/bin:/opt/java-jdk-1.8/bin:/home/daniel/Android/Sdk/emulator:/home/daniel/Android/Sdk/tools:/home/daniel/Android/Sdk/tools/bin:/home/daniel/Android/Sdk/platform-tools:/home/daniel/Documents/Applications/sublime_text_3:/opt/lampp/bin:/sbin:/opt/node/bin:/opt/java-jdk-1.8/bin:/home/daniel/Android/Sdk/emulator:/home/daniel/Android/Sdk/tools:/home/daniel/Android/Sdk/tools/bin:/home/daniel/Android/Sdk/platform-tools
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.18.3
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/daniel/Documents/Projects/meme-generator/packages/server/package.json: Unexpected token } in JSON at position 251
+      at JSON.parse (<anonymous>)
+      at /opt/node/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/opt/node/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /opt/node/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "@meme-generator/server",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+      
+      "start": "tsnd -r tsconfig-paths/register --ignore node_modules --transpile-only --no-notify --respawn src/index.ts",
+      
+    },
+    "dependencies": {
+      "body-parser": "^1.19.0",
+      "cors": "^2.8.5",
+      "express": "^4.17.1",
+      "mongoose": "^5.9.27"
+    },
+    "devDependencies": {
+      "@types/express": "^4.17.7",
+      "ts-node-dev": "^1.0.0-pre.56"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

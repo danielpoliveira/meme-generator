@@ -1,0 +1,15 @@
+{
+  "name": "meme-generator",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*",
+    "packages/shared/*"
+  ],
+  "author": "danielpoliveira <dani.edm@outlook.com>, Wesleyss071299 <wesleysilvadesousa@gmail.com>",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.9.7"
+  }
+}

@@ -60,8 +60,8 @@ const CustomTextInput: React.FC = props => {
                 }
                 :
                 {
-                  inputRange: [-190, 40],
-                  outputRange: [-190, 40],
+                  inputRange: [-190, 120],
+                  outputRange: [-190, 120],
                   extrapolate: "clamp",
                 }
             )

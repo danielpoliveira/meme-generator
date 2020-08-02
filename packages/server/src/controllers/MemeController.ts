@@ -3,13 +3,13 @@ import multer from 'multer';
 
 import Meme from '@models/Meme';
 
-const upload = multer({ dest: 'public/uploads' });
+let upload = multer({ dest: '../../public/uploads/' });
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/memes', async (req, res) => {
   try {
-    const meme = await Meme.find({ });
+    const meme = await Meme.find({ }).sort({ createdAt: -1 });
 
     return res.send({ meme });
 
@@ -18,16 +18,16 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', upload.single('image'), async (req, res) => {
-  const { photo } = req.file;
+router.post('/meme', upload.single('image'), async (req, res) => {  
+  const image = req.file;
   const { username } = req.body;
 
-  if (!photo || !username)
+  if (!image || !username)
     return res.status(400).send({ error: 'error on post images' });
 
   try {
     const meme = await Meme.create({
-      image: photo.filename,
+      image: image.filename,
       username,
     });
 
@@ -35,6 +35,7 @@ router.post('/', upload.single('image'), async (req, res) => {
   } catch (err) {
     return res.status(500).send({ errors: [err] });
   }
+
 });
 
 export default router;

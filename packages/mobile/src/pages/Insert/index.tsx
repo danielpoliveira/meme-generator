@@ -1,28 +1,76 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, Image, ImageBackground } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, Image, ImageBackground, TextInput, StyleSheet } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
 import ViewShot from 'react-native-view-shot';
 import CustomTextInput from './CustomTextInput';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import api from '../../services/api';
+import axios from 'axios'
+//GLOBAL.FormData = GLOBAL.originalFormData || GLOBAL.FormData;
+
 const Insert: React.FC = () => {
 
   const full = useRef();
+  const [username, setUsername] = useState(null);
   const [image, setImage] = useState(null);
-  const [meme, setMeme] = useState(null);
+  //const [meme, setMeme] = useState(null);
+
+  const headerConfig = {
+    headers: {
+      'Content-Type': 'multipart/form-data; charset=utf-8;'
+    }
+  };
+
+  useEffect(() => {
+    async function teste () {
+      await api.get('/memes').then(res => {
+        console.log('funcionando -> ', res.data);
+      })
+    }
+
+    teste();
+  }, [])
 
   const onCapture = React.useCallback(() => {
+
+    const data = new FormData();
+
     full.current.capture().then(res => {
 
+      data.append('image', {
+        uri: res,
+        type: 'image/png',
+        name: 'teste'
+      });
+      console.log(username);
+      
+      data.append('username', username);
+
+      api.post('/meme', data, headerConfig).then(res => {
+        console.log('funcionando -> ', res.data);
+      })
+
       console.log(res)
-      setMeme(res)
+      //setMeme(res)
     });
+
+  
   }, []);
 
   return (
     <>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} >
+
+        <View style={{ padding: 5, width: 300, margin: 10, alignItems: "center", borderRadius: 4, borderWidth: StyleSheet.hairlineWidth }}>
+          <TextInput
+            value={username}
+            onChangeText={setUsername}
+            placeholder="Digite seu nome"
+          />
+        </View>
+
         <ViewShot ref={full} >
 
           {/*<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} > */}
@@ -82,12 +130,12 @@ const Insert: React.FC = () => {
 
         </View>
         {/** </View> */}
-    </View>
-      {meme && (
+      </View>
+      {/*meme && (
         <Image
           style={{ width: 200, height: 200 }}
           source={{ uri: meme }} />
-      )}
+      )*/}
     </>
   );
 }

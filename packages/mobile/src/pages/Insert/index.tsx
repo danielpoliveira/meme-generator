@@ -7,15 +7,16 @@ import CustomTextInput from './CustomTextInput';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import api from '../../services/api';
-import axios from 'axios'
-//GLOBAL.FormData = GLOBAL.originalFormData || GLOBAL.FormData;
 
-const Insert: React.FC = () => {
+GLOBAL.FormData = GLOBAL.originalFormData || GLOBAL.FormData;
+
+const Insert: React.FC = props => {
+
+  const { navigation } = props;
 
   const full = useRef();
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState('');
   const [image, setImage] = useState(null);
-  //const [meme, setMeme] = useState(null);
 
   const headerConfig = {
     headers: {
@@ -23,41 +24,31 @@ const Insert: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    async function teste () {
-      await api.get('/memes').then(res => {
-        console.log('funcionando -> ', res.data);
-      })
-    }
-
-    teste();
-  }, [])
-
-  const onCapture = React.useCallback(() => {
-
+  const onCapture = async () => {
     const data = new FormData();
 
-    full.current.capture().then(res => {
+    data.append('username', username);
+
+    console.log(username);
+
+    full.current.capture().then(async res => {
 
       data.append('image', {
         uri: res,
         type: 'image/png',
         name: 'teste'
       });
-      console.log(username);
       
-      data.append('username', username);
-
-      api.post('/meme', data, headerConfig).then(res => {
+      await api.post('/meme', data, headerConfig).then(res => {
         console.log('funcionando -> ', res.data);
+      }).then(() => {
+        navigation.navigate('Home');
       })
 
       console.log(res)
       //setMeme(res)
     });
-
-  
-  }, []);
+  }
 
   return (
     <>
@@ -65,13 +56,13 @@ const Insert: React.FC = () => {
 
         <View style={{ padding: 5, width: 300, margin: 10, alignItems: "center", borderRadius: 4, borderWidth: StyleSheet.hairlineWidth }}>
           <TextInput
-            value={username}
+            
             onChangeText={setUsername}
             placeholder="Digite seu nome"
           />
         </View>
 
-        <ViewShot ref={full} >
+        <ViewShot ref={full} options={{ format: "jpg", quality: 0.3 }} >
 
           {/*<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} > */}
           {/*<View style={{ alignItems: "center", backgroundColor: 'brown' }}>

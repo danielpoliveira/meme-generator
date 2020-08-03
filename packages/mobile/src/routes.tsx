@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+//import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 export default () => {
 
   return (
-    <NavigationContainer>
+    
       <Tab.Navigator>
         <Tab.Screen
           options={{
@@ -22,10 +22,13 @@ export default () => {
           component={Home}
         />
         <Tab.Screen
+          options={{
+            tabBarIcon: ({ color }) => <MaterialIcons name="add" size={30} color={color} />
+          }}
           name="Insert"
           component={Insert}
         />
       </Tab.Navigator>
-    </NavigationContainer>
+    
   );
 }

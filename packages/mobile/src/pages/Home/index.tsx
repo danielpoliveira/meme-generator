@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, StatusBar } from 'react-native';
-
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useFocusEffect } from '@react-navigation/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import moment from 'moment';
 
-import { useFocusEffect } from '@react-navigation/native';
-
 import api, { baseURL } from '../../services/api';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 moment.updateLocale('pt-br', {
   months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
   weekdays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado']
 });
 
-const Home: React.FC = props => {
+const Home: React.FC = (props: any) => {
 
   const { navigation } = props;
 
@@ -33,20 +31,7 @@ const Home: React.FC = props => {
       loadMemes();
     }, [])
   );
-  /*
-    useEffect(() => {
-      async function loadMemes() {
-        await api.get('/memes').then(res => {
-  
-          console.log(res.data.meme);
-  
-          setMemes(res.data.meme);
-        })
-      }
-  
-      loadMemes();
-    }, []);
-  */
+
   return (
     <View style={{}} >
 

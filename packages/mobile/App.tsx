@@ -13,19 +13,16 @@ import Meme from './src/pages/Meme';
 
 const Stack = createStackNavigator();
 
-const App: React.FC = () => {
-  return (
-    <>
-      <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.20)" />
-      <Routes />
-    </>
-  );
-}
+const App: React.FC = () =>
+<>
+  <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.20)" />
+  <Routes />
+</>
 
 export default () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} >
+      <Stack.Navigator screenOptions={{ headerShown: false }} >
         <Stack.Screen name="PrimaryTabs" component={App} />
         <Stack.Screen name="Meme" component={Meme} />
       </Stack.Navigator>

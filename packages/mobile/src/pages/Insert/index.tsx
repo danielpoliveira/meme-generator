@@ -8,13 +8,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import api from '../../services/api';
 
+declare var GLOBAL: any;
+
 GLOBAL.FormData = GLOBAL.originalFormData || GLOBAL.FormData;
 
-const Insert: React.FC = props => {
+const Insert: React.FC = (props: any) => {
 
   const { navigation } = props;
 
-  const full = useRef();
+  const full: any = useRef();
   const [username, setUsername] = useState('');
   const [image, setImage] = useState(null);
 
@@ -29,105 +31,88 @@ const Insert: React.FC = props => {
 
     data.append('username', username);
 
-    console.log(username);
-
     full.current.capture().then(async res => {
+      data.append('image',
+        JSON.parse(
+          JSON.stringify({
+            uri: res,
+            type: 'image/png',
+            name: 'teste'
+          })
+        )
+      );
 
-      data.append('image', {
-        uri: res,
-        type: 'image/png',
-        name: 'teste'
-      });
-      
       await api.post('/meme', data, headerConfig).then(res => {
         console.log('funcionando -> ', res.data);
       }).then(() => {
         navigation.navigate('Home');
       })
-
-      console.log(res)
-      //setMeme(res)
     });
   }
 
+  const position: number = 1;
+
   return (
-    <>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} >
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} >
 
-        <View style={{ padding: 5, width: 300, margin: 10, alignItems: "center", borderRadius: 4, borderWidth: StyleSheet.hairlineWidth }}>
-          <TextInput
-            
-            onChangeText={setUsername}
-            placeholder="Digite seu nome"
-          />
-        </View>
+      <View style={{ padding: 5, width: 300, margin: 10, alignItems: "center", borderRadius: 4, borderWidth: StyleSheet.hairlineWidth }}>
+        <TextInput
 
-        <ViewShot ref={full} options={{ format: "jpg", quality: 0.3 }} >
+          onChangeText={setUsername}
+          placeholder="Digite seu nome"
+        />
+      </View>
 
-          {/*<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }} > */}
-          {/*<View style={{ alignItems: "center", backgroundColor: 'brown' }}>
-      <CustomTextInput position='0' />
-      <CustomTextInput />
-    </View>*/}
+      <ViewShot ref={full} options={{ format: "jpg", quality: 0.3 }} >
 
-          <ImageBackground
-            style={{
-              width: 400,
-              height: 400,
-              backgroundColor: "gray",
-            }}
-            //source={{ uri: 'https://timeline.canaltech.com.br/348109.1400/vai-pa-onde-criador-de-pocoyo-acha-meme-brazuca-inteligente-e-divertido.jpg' }}
-            source={{ uri: image }}
-          >
-            <CustomTextInput position='0' />
-            <CustomTextInput />
-          </ImageBackground>
+        <ImageBackground
+          style={{
+            width: 400,
+            height: 400,
+            backgroundColor: "gray",
+          }}
+          
+          source={{ uri: image }}
+        >
+          <CustomTextInput />
+          <CustomTextInput />
+        </ImageBackground>
 
-        </ViewShot>
-        <View>
+      </ViewShot>
+      <View>
 
-          <View style={{ flexDirection: "row", }} >
-            <View
-              style={{ backgroundColor: "brown", padding: 10, margin: 10 }}
-              onTouchEnd={() => ImagePicker.launchCamera({ noData: true }, response => {
-                if (response?.uri)
-                  setImage(response.uri)
-              })} >
-              <Text style={{ color: "#FFF" }}>Open Camera</Text>
-            </View>
-
-            <View
-              style={{ backgroundColor: "brown", padding: 10, margin: 10 }}
-              onTouchEnd={() => ImagePicker.launchImageLibrary({ noData: true }, response => {
-                if (response?.uri)
-                  setImage(response.uri)
-              })} >
-              <Text style={{ color: "#FFF" }}>Choose image </Text>
-            </View>
-
+        <View style={{ flexDirection: "row", }} >
+          <View
+            style={{ backgroundColor: "brown", padding: 10, margin: 10 }}
+            onTouchEnd={() => ImagePicker.launchCamera({ noData: true }, response => {
+              if (response?.uri)
+                setImage(response.uri)
+            })} >
+            <Text style={{ color: "#FFF" }}>Open Camera</Text>
           </View>
 
-          {
-            image && (
-              <TouchableOpacity
-                onPress={onCapture}
-                style={{ padding: 15, borderRadius: 10, marginTop: 20, backgroundColor: "#004ba0", alignItems: "center" }} >
-                <Text style={{ color: '#FFF', }}>{'Generate a meme'.toUpperCase()}</Text>
-              </TouchableOpacity>
-            )
-          }
-
-
+          <View
+            style={{ backgroundColor: "brown", padding: 10, margin: 10 }}
+            onTouchEnd={() => ImagePicker.launchImageLibrary({ noData: true }, response => {
+              if (response?.uri)
+                setImage(response.uri)
+            })} >
+            <Text style={{ color: "#FFF" }}>Choose image </Text>
+          </View>
 
         </View>
-        {/** </View> */}
+
+        {
+          (image && username)? (
+            <TouchableOpacity
+              onPress={onCapture}
+              style={{ padding: 15, borderRadius: 10, marginTop: 20, backgroundColor: "#004ba0", alignItems: "center" }} >
+              <Text style={{ color: '#FFF', }}>{'Generate a meme'.toUpperCase()}</Text>
+            </TouchableOpacity>
+          ): undefined
+        }
       </View>
-      {/*meme && (
-        <Image
-          style={{ width: 200, height: 200 }}
-          source={{ uri: meme }} />
-      )*/}
-    </>
+    </View>
   );
 }
 

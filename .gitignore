@@ -1,3 +1,4 @@
 node_modules
-dists
+dist
 public/uploads
+yarn-error.log

@@ -1,11 +1,5 @@
 import mongoose from '@database/mongoose';
 
-/*interface Meme {
-  id: string;
-  imagem: string;
-  username: string;
-}*/
-
 const MemeSchema = mongoose.Schema({
   image: {
     type: String,

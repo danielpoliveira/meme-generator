@@ -1,37 +1,35 @@
-import express from "express";
-import cors from 'cors';
+import express, { Request, Response } from 'express';
+import cors from "cors";
+import fs from "fs";
 
-import fs from 'fs';
+import routes from "./routes";
 
-import routes from './routes';
-
-const PORT = process.env.PORT || 3333;
+const PORT = process.env.PORT || 3333
 
 const app = express();
 
 app.use(cors());
-app.use(routes)
+app.use(routes);
 
-app.get('/images/:id', function (req, res) {
-  const { id } = req.params;
-  
-  var file = `../../public/uploads/${id}`
-  
-  var type = 'image/jpeg';
-  var s = fs.createReadStream(file);
+app.get("/images/:id", function (req: Request, res: Response) {
+  const { id } = req.params
 
-  //console.log(s)
-  s.on('open', function () {
-    res.status(200)
-    res.set('Content-Type', type);
-    s.pipe(res);
+  const file = `../../public/uploads/${id}`;
+
+  const type = "image/jpeg";
+  const s = fs.createReadStream(file)
+
+  s.on("open", function () {
+    res.status(200);
+    res.set("Content-Type", type)
+    s.pipe(res)
   });
-  s.on('error', function () {
-      res.set('Content-Type', 'text/plain');
-      res.status(404).end('Not found');
-  });
+  s.on("error", function () {
+    res.set("Content-Type", "text/plain");
+    res.status(404).end("Not found");
+  })
 });
 
 app.listen(PORT, () => {
-  console.log(`BACKEND is running on port ${PORT}`);
-})
+  console.log(`BACKEND is running on port ${PORT}`)
+});

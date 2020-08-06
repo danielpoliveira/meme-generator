@@ -2,22 +2,30 @@
   "extends": "../../tsconfig.json",
 
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": ["ES6"],
     "baseUrl": ".",
+    "allowJs": true,                       
+    "outDir": "./dist",                        
+    "rootDir": "./src",
     "typeRoots": [
       "./node_modules/@types",
       "./src/@types"
     ],
     "paths": {
-      "@database/*": ["./database/*"],
+      "@config/*": ["./src/config/*"],
+      "@database/*": ["./src/database/*"],
       "@controllers/*": ["./src/controllers/*"],
-      "@models/*": ["./src/models/*"],
+      "@models/*": ["./src/models/*"]
     }
   },
   "include": [
     "./src/**/*"
-  ],
+  ]
   
 }

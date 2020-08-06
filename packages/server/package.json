@@ -1,10 +1,16 @@
 {
   "name": "@meme-generator/server",
   "version": "1.0.0",
+  "private": true,
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": "12.18.3"
+  },
   "scripts": {
-    "start": "tsnd -r tsconfig-paths/register --ignore node_modules --transpile-only --no-notify --respawn src/index.ts"
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored ",
+    "start": "node dist/index.js",
+    "dev": "tsnd -r tsconfig-paths/register --ignore node_modules --transpile-only --no-notify --respawn src/index.ts"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -14,7 +20,15 @@
     "multer": "^1.4.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/cors": "^2.8.7",
     "@types/express": "^4.17.7",
+    "@types/jest": "^26.0.9",
+    "babel-plugin-module-resolver": "^4.0.0",
     "ts-node-dev": "^1.0.0-pre.56"
   }
 }
